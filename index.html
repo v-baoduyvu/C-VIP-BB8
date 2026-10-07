@@ -1031,7 +1031,7 @@
       .hero { grid-template-columns: 1fr; }
       .hero-mark { display: none; }
       .control-bar { grid-template-columns: 1fr; }
-      .view-tabs { display: grid; grid-template-columns: repeat(2, 1fr); }
+      .view-tabs { display: grid; grid-template-columns: repeat(3, 1fr); }
       .view-tab { padding: 0 8px; }
       .filter-wrap {
         grid-column: auto;
@@ -1085,7 +1085,7 @@
         </p>
         <div class="hero-stats" aria-label="Presentation capabilities">
           <span><i></i>9 BB8 configurations</span>
-          <span><i></i>Dock and monitor filtering</span>
+          <span><i></i>Customer, dock, and monitor filtering</span>
           <span><i></i>Side-by-side comparison</span>
         </div>
       </div>
@@ -1096,6 +1096,7 @@
       <div class="view-tabs" role="tablist" aria-label="View by">
         <button class="view-tab active" type="button" data-mode="dock" role="tab" aria-selected="true">Dock</button>
         <button class="view-tab" type="button" data-mode="monitor" role="tab" aria-selected="false">Monitor</button>
+        <button class="view-tab" type="button" data-mode="customer" role="tab" aria-selected="false">Customer</button>
       </div>
       <div class="filter-wrap">
         <label id="filter-label" for="item-filter">Choose Dock</label>
@@ -1336,7 +1337,8 @@
 
       const modeLabels = {
         dock: "Dock",
-        monitor: "Monitor"
+        monitor: "Monitor",
+        customer: "Customer"
       };
 
       const escapeHtml = value => String(value)
@@ -1358,10 +1360,19 @@
         return [config.p2.dock, config.p3?.dock].filter(Boolean);
       }
 
+      function customersFor(config) {
+        return config.customer
+          .split(",")
+          .map(customer => customer.trim())
+          .filter(customer => customer && customer !== "Customer not specified");
+      }
+
       function optionsForMode() {
-        const values = configurations.flatMap(config =>
-          state.mode === "dock" ? docksFor(config) : monitorsFor(config)
-        );
+        const values = configurations.flatMap(config => {
+          if (state.mode === "dock") return docksFor(config);
+          if (state.mode === "monitor") return monitorsFor(config);
+          return customersFor(config);
+        });
         return [...new Set(values)]
           .sort((left, right) => left.localeCompare(right))
           .map(value => ({ value, label: value }));
@@ -1370,7 +1381,8 @@
       function matches(config) {
         if (state.filter === "all") return true;
         if (state.mode === "dock") return docksFor(config).includes(state.filter);
-        return monitorsFor(config).includes(state.filter);
+        if (state.mode === "monitor") return monitorsFor(config).includes(state.filter);
+        return customersFor(config).includes(state.filter);
       }
 
       function matchingConfigs() {
