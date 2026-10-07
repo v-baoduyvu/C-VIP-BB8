@@ -72,12 +72,12 @@
       position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 28px;
+      gap: 20px;
       align-items: center;
-      margin-bottom: 20px;
-      padding: 24px 28px;
+      margin-bottom: 14px;
+      padding: 16px 20px;
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: 20px;
       background:
         linear-gradient(115deg, rgba(32, 111, 199, .14), transparent 42%),
         linear-gradient(145deg, rgba(183, 133, 255, .08), rgba(8, 11, 20, .18));
@@ -87,10 +87,10 @@
 
     .hero::after {
       position: absolute;
-      top: -140px;
-      right: 90px;
-      width: 360px;
-      height: 360px;
+      top: -120px;
+      right: 70px;
+      width: 250px;
+      height: 250px;
       content: "";
       border: 1px solid rgba(255, 255, 255, .07);
       border-radius: 50%;
@@ -104,7 +104,7 @@
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      margin-bottom: 12px;
+      margin-bottom: 7px;
       color: #95c7ff;
       font-size: .72rem;
       font-weight: 800;
@@ -122,37 +122,37 @@
     h1 {
       max-width: 920px;
       margin: 0;
-      font-size: clamp(2.25rem, 4.2vw, 4.45rem);
+      font-size: clamp(1.65rem, 2.6vw, 2.65rem);
       font-weight: 720;
-      letter-spacing: -.055em;
-      line-height: .94;
+      letter-spacing: -.045em;
+      line-height: 1;
     }
 
     .hero-copy {
       max-width: 720px;
-      margin: 13px 0 0;
+      margin: 7px 0 0;
       color: var(--muted);
-      font-size: clamp(.9rem, 1.1vw, 1rem);
-      line-height: 1.55;
+      font-size: .82rem;
+      line-height: 1.4;
     }
 
     .hero-stats {
       display: flex;
       flex-wrap: wrap;
       gap: 9px;
-      margin-top: 17px;
+      margin-top: 10px;
     }
 
     .hero-stats span {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 7px 10px;
+      padding: 5px 9px;
       border: 1px solid var(--line);
       border-radius: 999px;
       color: #dce4f8;
       background: rgba(5, 8, 16, .35);
-      font-size: .69rem;
+      font-size: .64rem;
       font-weight: 750;
     }
 
@@ -168,11 +168,11 @@
       position: relative;
       display: grid;
       z-index: 1;
-      width: 112px;
-      height: 112px;
+      width: 76px;
+      height: 76px;
       place-items: center;
       border: 1px solid var(--line);
-      border-radius: 30px;
+      border-radius: 22px;
       background: linear-gradient(145deg, rgba(89, 168, 255, .18), rgba(183, 133, 255, .12));
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -180,17 +180,17 @@
 
     .hero-mark::after {
       position: absolute;
-      width: 65px;
-      height: 65px;
+      width: 43px;
+      height: 43px;
       content: "";
       border: 1px solid rgba(255, 255, 255, .16);
-      border-radius: 22px;
+      border-radius: 15px;
       transform: rotate(18deg);
     }
 
     .hero-mark strong {
       z-index: 1;
-      font-size: 1.55rem;
+      font-size: 1.05rem;
       letter-spacing: -.06em;
     }
 
