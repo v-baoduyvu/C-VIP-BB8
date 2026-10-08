@@ -1217,7 +1217,7 @@
           customer: "PWC",
           p1: { customer: "PWC", monitor: "HP S5 Pro DQHD Curved Monitor - 549pm", cable: "TBT" },
           p2: { customer: "PWC", dock: "Targus 419 Dock", monitors: [
-            { customers: "PWC", name: "Dell P3424WEB", cable: "HDMI" }
+            { customers: "PWC", name: "Dell U3425WE", cable: "HDMI" }
           ]},
           p3: { dock: "Surface Dock 2", monitor: "Dell U3425WE", cable: "TBT" }
         },
@@ -1557,7 +1557,7 @@
           </div>
           <div class="path">
             <dt>Port #2 • Docked</dt>
-            <dd>${escapeHtml(config.p2.dock)}<br><em>DUT Port #2 • ${escapeHtml(config.p2.customer)}</em><br>${p2Monitors}</dd>
+            <dd>${escapeHtml(config.p2.dock)}<br>${p2Monitors}</dd>
           </div>
           ${config.p3 ? `
             <div class="path">
