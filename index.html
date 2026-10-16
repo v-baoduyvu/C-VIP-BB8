@@ -1361,10 +1361,11 @@
       }
 
       function customersFor(config) {
-        return config.customer
-          .split(",")
+        return [...new Set([config.customer, config.p3?.customer]
+          .filter(Boolean)
+          .flatMap(customer => customer.split(","))
           .map(customer => customer.trim())
-          .filter(customer => customer && customer !== "Customer not specified");
+          .filter(customer => customer && customer !== "Customer not specified"))];
       }
 
       function optionsForMode() {
@@ -1425,7 +1426,7 @@
                     aria-pressed="${config.id === state.selectedId}">
               <span class="card-index">Configuration ${String(configurations.indexOf(config) + 1).padStart(2, "0")}<i></i></span>
               <h3>${escapeHtml(config.name)}</h3>
-              <p>${escapeHtml(config.customer)}</p>
+              <p>${escapeHtml(customersFor(config).join(", "))}</p>
               <span class="card-meta">
                 <span>${monitorCount} monitor${monitorCount === 1 ? "" : "s"}</span>
                 <span>${docksFor(config).length} dock${docksFor(config).length === 1 ? "" : "s"}</span>
@@ -1572,7 +1573,7 @@
         const config = configurations.find(item => item.id === state.selectedId) || configurations[0];
         els.kicker.textContent = `Configuration ${String(configurations.indexOf(config) + 1).padStart(2, "0")} of ${String(configurations.length).padStart(2, "0")}`;
         els.title.textContent = config.name;
-        els.customer.textContent = config.customer;
+        els.customer.textContent = customersFor(config).join(", ");
         els.monitorCount.textContent = monitorsFor(config).length;
         els.dockCount.textContent = docksFor(config).length;
         renderDiagram(config);
@@ -1590,7 +1591,7 @@
           const comparison = configurations.find(item => item.id === state.compareId) || configurations[1];
           els.comparisonKicker.textContent = `Configuration ${String(configurations.indexOf(comparison) + 1).padStart(2, "0")} of ${String(configurations.length).padStart(2, "0")}`;
           els.comparisonTitle.textContent = comparison.name;
-          els.comparisonCustomer.textContent = comparison.customer;
+          els.comparisonCustomer.textContent = customersFor(comparison).join(", ");
           renderDiagram(comparison, els.comparisonDiagram);
         }
         updatePresentationProgress();
@@ -1602,7 +1603,7 @@
           state.compareId = alternatives[0]?.id || state.selectedId;
         }
         els.compareSelect.innerHTML = alternatives
-          .map(config => `<option value="${escapeHtml(config.id)}">${escapeHtml(config.name)} • ${escapeHtml(config.customer)}</option>`)
+          .map(config => `<option value="${escapeHtml(config.id)}">${escapeHtml(config.name)} • ${escapeHtml(customersFor(config).join(", "))}</option>`)
           .join("");
         els.compareSelect.value = state.compareId;
       }
@@ -1610,11 +1611,7 @@
       function renderOverview() {
         const uniqueMonitors = new Set(configurations.flatMap(monitorsFor));
         const uniqueDocks = new Set(configurations.flatMap(docksFor));
-        const customers = new Set(
-          configurations
-            .map(config => config.customer)
-            .filter(customer => customer && customer !== "Customer not specified")
-        );
+        const customers = new Set(configurations.flatMap(customersFor));
 
         els.overviewMetrics.innerHTML = `
           <div class="overview-metric"><strong>${configurations.length}</strong><span>Diagrams</span></div>
@@ -1629,7 +1626,7 @@
             <div class="overview-card-header">
               <div>
                 <strong>${escapeHtml(config.name)}</strong>
-                <span>${escapeHtml(config.customer)}</span>
+                <span>${escapeHtml(customersFor(config).join(", "))}</span>
               </div>
               <div class="overview-card-number">${String(index + 1).padStart(2, "0")} / ${String(configurations.length).padStart(2, "0")}</div>
             </div>
